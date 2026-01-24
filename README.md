@@ -8,7 +8,7 @@ Let me introduce myself, I'm **Eki Zulfar Rachman**. On this occasion, I'd like 
 
 **Website Link:** [https://www.eki.my.id/](https://www.eki.my.id/)
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack..
 
 This project is built using modern web technologies:
 
@@ -177,7 +177,7 @@ VALUES ('REPLACE_WITH_YOUR_CERTIFICATE_IMAGE_URL.png');
 
 -- Insert one example comment
 INSERT INTO public.portfolio_comments (content, user_name) 
-VALUES ('Created By Eki Zulfar Rachman', 'ekizr');
+VALUES ('Created By Sujay paul', 'ekizr');
 
 ```
 
@@ -237,7 +237,7 @@ We would appreciate it if you decide to use this project. Please include proper 
 
 If you have any questions or need help with the setup, feel free to reach out\!
 
-**Eki Zulfar Rachman**
+**Sujay paul**
 
   - Website: [https://www.eki.my.id/](https://www.eki.my.id/)
   - GitHub: [EkiZR](https://github.com/EkiZR)
