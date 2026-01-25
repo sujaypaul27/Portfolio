@@ -71,7 +71,7 @@ const ProjectStats = ({ project }) => {
         </div>
         <div className="flex-grow">
           <div className="text-lg md:text-xl font-semibold text-purple-200">{featuresCount}</div>
-          <div className="text-[10px] md:text-xs text-gray-400">Fitur Utama</div>
+          <div className="text-[10px] md:text-xs text-gray-400">Total Key Features</div>
         </div>
       </div>
     </div>
@@ -108,11 +108,24 @@ const ProjectDetails = () => {
     if (selectedProject) {
       const enhancedProject = {
         ...selectedProject,
-        Features: selectedProject.Features || [],
-        TechStack: selectedProject.TechStack || [],
-        Github: selectedProject.Github || 'https://github.com/EkiZR',
+
+         Features: Array.isArray(selectedProject.Features)
+    ? selectedProject.Features
+    : selectedProject.Features
+    ? selectedProject.Features.split(",")
+    : []
+        ,
+
+        TechStack:
+  typeof selectedProject.TechStack === "string"
+    ? selectedProject.TechStack.split(",").map(t => t.trim())
+    : [],
+
+
+        Github: selectedProject.Github || 'https://github.com/sujaypaul27',
       };
       setProject(enhancedProject);
+     
     }
   }, [id]);
 
@@ -209,6 +222,8 @@ const ProjectDetails = () => {
                 </h3>
                 {project.TechStack.length > 0 ? (
                   <div className="flex flex-wrap gap-2 md:gap-3">
+                    console.log("PROJECT OBJECT:", project);
+
                     {project.TechStack.map((tech, index) => (
                       <TechBadge key={index} tech={tech} />
                     ))}
@@ -232,7 +247,7 @@ const ProjectDetails = () => {
                 <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/10 transition-colors duration-300 rounded-2xl" />
               </div>
 
-              {/* Fitur Utama */}
+              {/* Key Features */}
               <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl p-8 border border-white/10 space-y-6 hover:border-white/20 transition-colors duration-300 group">
                 <h3 className="text-xl font-semibold text-white/90 flex items-center gap-3">
                   <Star className="w-5 h-5 text-yellow-400 group-hover:rotate-[20deg] transition-transform duration-300" />

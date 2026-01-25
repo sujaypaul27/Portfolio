@@ -116,6 +116,7 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
   // Memoized calculations
   const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
   const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
@@ -142,7 +143,7 @@ const AboutPage = () => {
     totalCertificates: storedCertificates.length,
     YearExperience: experienceText,
   };
-}, []);
+}, [setRefreshKey]);
 
 
   // Optimized AOS initialization
@@ -168,6 +169,10 @@ const AboutPage = () => {
       clearTimeout(resizeTimer);
     };
   }, []);
+
+  
+
+  
 
   // Memoized stats data
   const statsData = useMemo(() => [
@@ -255,7 +260,7 @@ const AboutPage = () => {
       </div>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://drive.google.com/drive/folders/1BOm51Grsabb3zj6Xk27K-iRwI1zITcpo" className="w-full lg:w-auto">
+              <a href="https://drive.google.com/file/d/16Hm4vU5bzYyJaNsCmh4MdQKnnmh7Xv5_/view?usp=sharing" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
                 data-aos-duration="800"

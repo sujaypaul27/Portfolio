@@ -96,7 +96,7 @@ git clone <your-github-repository-url>
 Step 2
 Navigate into the project folder
 
-cd Portofolio
+cd Portfolio
 
 Step 3
 Install dependencies
