@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { supabase } from "../supabase"; 
+import { supabase } from "../supabase.js"; 
 
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -10,11 +10,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import CardProject from "../components/CardProject";
-import TechStackIcon from "../components/TechStackIcon";
+import CardProject from "../components/CardProject.jsx";
+import TechStackIcon from "../components/TechStackIcon.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Certificate from "../components/Certificate";
+import Certificate from "../components/Certificate.jsx";
 import { Code, Award, Boxes } from "lucide-react";
 
 
@@ -152,7 +152,7 @@ export default function FullWidthTabs() {
       // Supabase mengembalikan data dalam properti 'data'
       const projectData = projectsResponse.data || [];
       const certificateData = certificatesResponse.data || [];
-       
+      console.log("PROJECT DATA:", projectData);
       console.log("CERTIFICATE DATA:", certificateData);
       
       setProjects(projectData);
@@ -350,7 +350,10 @@ export default function FullWidthTabs() {
                     data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                   >
-                    <Certificate ImgSertif={certificate.Img} />
+                    <Certificate 
+                    ImgSertif={certificate.Img}
+                    title={certificate.Title}
+                     />
                   </div>
                 ))}
               </div>

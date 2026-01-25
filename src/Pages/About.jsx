@@ -116,6 +116,7 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
   // Memoized calculations
   const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
   const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
@@ -142,7 +143,7 @@ const AboutPage = () => {
     totalCertificates: storedCertificates.length,
     YearExperience: experienceText,
   };
-}, []);
+}, [setRefreshKey]);
 
 
   // Optimized AOS initialization
@@ -168,6 +169,10 @@ const AboutPage = () => {
       clearTimeout(resizeTimer);
     };
   }, []);
+
+  
+
+  
 
   // Memoized stats data
   const statsData = useMemo(() => [
