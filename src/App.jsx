@@ -12,6 +12,8 @@ import WelcomeScreen from "./Pages/WelcomeScreen";
 import { AnimatePresence } from 'framer-motion';
 import notfound from "./Pages/404";
 import NotFoundPage from "./Pages/404";
+import Consistency from "./components/Consistency";
+
 
 const LandingPage = ({ showWelcome, setShowWelcome }) => {
   return (
@@ -35,10 +37,16 @@ const LandingPage = ({ showWelcome, setShowWelcome }) => {
             <About />
           </section>
 
-          <section id="Portofolio">
-            <Portofolio />
-          </section>
+          <section id="Consistency">
+            <Consistency />
+            </section>
+            
+            <section id="Portofolio">
+              <Portofolio />
+              </section>
 
+
+          
           <section id="Contact">
             <ContactPage />
           </section>
