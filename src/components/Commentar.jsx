@@ -118,7 +118,7 @@ const CommentForm = memo(({ onSubmit, isSubmitting, error }) => {
     }, [newComment, userName, imageFile, onSubmit]);
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit}  className="space-y-6">
             <div className="space-y-2" data-aos="fade-up" data-aos-duration="1000">
                 <label className="block text-sm font-medium text-white">
                     Name <span className="text-red-400">*</span>
@@ -388,7 +388,7 @@ const Komentar = () => {
                         <MessageCircle className="w-6 h-6 text-indigo-400" />
                     </div>
                     <h3 className="text-xl font-semibold text-white">
-                        Comments <span className="text-indigo-400">({totalComments})</span>
+                       Express your  Comments on this portfolio <span className="text-indigo-400">({totalComments})</span>
                     </h3>
                 </div>
             </div>
