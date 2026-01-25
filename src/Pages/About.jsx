@@ -21,7 +21,7 @@ const Header = memo(() => (
       data-aos-duration="800"
     >
       <Sparkles className="w-5 h-5 text-purple-400" />
-      Code. Optimize. Build. Repeat.
+       Code it . Optimize it . Build it . Repeat.
       <Sparkles className="w-5 h-5 text-purple-400" />
     </p>
   </div>
@@ -214,7 +214,7 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-             Seorang lulusan Teknik Jaringan Komputer dan Telekomunikasi yang memiliki ketertarikan besar dalam pengembangan Front-End. Saya berfokus pada menciptakan pengalaman digital yang menarik dan selalu berusaha memberikan solusi terbaik dalam setiap proyek yang saya kerjakan.
+             A highly motivated learner with the ability to quickly adapt to new technologies and tools. Possesses strong problem-solving skills and a continuous learning mindset to improve both technical and professional capabilities.
             </p>
 
                {/* Quote Section */}
@@ -235,7 +235,7 @@ const AboutPage = () => {
         </div>
         
         <blockquote className="text-gray-300 text-center lg:text-left italic font-medium text-sm relative z-10 pl-6">
-          "Leveraging AI as a professional tool, not a replacement."
+          "Progress comes from persistence, consistency, discipline, and a commitment to continuous improvement."
         </blockquote>
       </div>
 
