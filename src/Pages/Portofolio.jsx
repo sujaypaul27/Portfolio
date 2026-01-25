@@ -136,6 +136,8 @@ export default function FullWidthTabs() {
 
 
   const fetchData = useCallback(async () => {
+   
+
     try {
       // Mengambil data dari Supabase secara paralel
       const [projectsResponse, certificatesResponse] = await Promise.all([
@@ -150,9 +152,12 @@ export default function FullWidthTabs() {
       // Supabase mengembalikan data dalam properti 'data'
       const projectData = projectsResponse.data || [];
       const certificateData = certificatesResponse.data || [];
-
+       
+      console.log("CERTIFICATE DATA:", certificateData);
+      
       setProjects(projectData);
       setCertificates(certificateData);
+      
 
       // Store in localStorage (fungsionalitas ini tetap dipertahankan)
       localStorage.setItem("projects", JSON.stringify(projectData));

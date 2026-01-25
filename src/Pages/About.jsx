@@ -1,4 +1,6 @@
-import React, { useEffect, memo, useMemo } from "react"
+import { useState, useEffect, memo, useMemo } from "react";
+import { supabase } from "../supabase";
+
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -116,20 +118,32 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 const AboutPage = () => {
   // Memoized calculations
   const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    
-    const startDate = new Date("2021-11-06");
-    const today = new Date();
-    const experience = today.getFullYear() - startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+  const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
+  const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
 
-    return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
-      YearExperience: experience
-    };
-  }, []);
+  const startDate = new Date("2025-06-01");
+  const today = new Date();
+
+  let years = today.getFullYear() - startDate.getFullYear();
+  let months = today.getMonth() - startDate.getMonth();
+
+  // Adjust if current month is before start month
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  // Format nicely (hide 0 years)
+  const experienceText =
+    years > 0 ? `${years}y ${months}m` : `${months}m`;
+
+  return {
+    totalProjects: storedProjects.length,
+    totalCertificates: storedCertificates.length,
+    YearExperience: experienceText,
+  };
+}, []);
+
 
   // Optimized AOS initialization
   useEffect(() => {
@@ -177,7 +191,7 @@ const AboutPage = () => {
       icon: Globe,
       color: "from-[#6366f1] to-[#a855f7]",
       value: YearExperience,
-      label: "Years of Experience",
+      label: "(LEARNING) Experience",
       description: "Continuous learning journey",
       animation: "fade-left",
     },
