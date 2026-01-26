@@ -18,6 +18,31 @@ import Certificate from "../components/Certificate.jsx";
 import { Code, Award, Boxes } from "lucide-react";
 
 
+const coreSkills = [
+  { icon: "html.svg", language: "HTML" },
+  { icon: "css.svg", language: "CSS" },
+  { icon: "javascript.svg", language: "JavaScript" },
+  { icon: "reactjs.svg", language: "React" },
+  { icon: "nodejs.svg", language: "Node.js" },
+  { icon: "bootstrap.svg", language: "Bootstrap" },
+  { icon: "github.svg", language: "Git & GitHub" },
+];
+
+const toolsUsed = [
+  { icon: "vercel.svg", language: "  Vercel (Deployment)" },
+  { icon: "SweetAlert.svg", language: "  SweetAlert2   (UI feedback)" },
+  { icon: "Nodemailer.svg", language: "  Nodemailer  (email sending)" },
+  { icon: "supabase.svg", language: "Supabase (Database)" },
+  
+];
+
+const exploring = [
+  { icon: "firebase.svg", language: "Firebase" },
+  { icon: "vite.svg", language: "Vite" },
+  { icon: "tailwind.svg", language: "Tailwind CSS" },
+];
+
+
 const ToggleButton = ({ onClick, isShowingMore }) => (
   <button
     onClick={onClick}
@@ -103,20 +128,7 @@ function a11yProps(index) {
 }
 
 // techStacks tetap sama
-const techStacks = [
-  { icon: "html.svg", language: "HTML" },
-  { icon: "css.svg", language: "CSS" },
-  { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
-  { icon: "reactjs.svg", language: "ReactJS" },
-  { icon: "vite.svg", language: "Vite" },
-  { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "firebase.svg", language: "Firebase" },
-  { icon: "MUI.svg", language: "Material UI" },
-  { icon: "vercel.svg", language: "Vercel" },
-  { icon: "SweetAlert.svg", language: "SweetAlert2" },
-];
+
 
 export default function FullWidthTabs() {
   const theme = useTheme();
@@ -368,19 +380,36 @@ export default function FullWidthTabs() {
             )}
           </TabPanel>
 
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <div className="container mx-auto flex justify-center items-center overflow-hidden pb-[5%]">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-8 gap-5">
-                {techStacks.map((stack, index) => (
-                  <div
-                    key={index}
-                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
-                  >
-                    <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
-                  </div>
-                ))}
+       <TabPanel value={value} index={2}>
+            <div className="space-y-12 pb-[5%]">
+
+              <div>
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">🟢 Core Skills</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+                  {coreSkills.map((s, i) => (
+                    <TechStackIcon key={i} TechStackIcon={s.icon} Language={s.language} />
+                  ))}
+                </div>
               </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">🟡 Tools & Services I’ve Worked With</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+                  {toolsUsed.map((s, i) => (
+                    <TechStackIcon key={i} TechStackIcon={s.icon} Language={s.language} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">🔵 Exploring / Learning</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+                  {exploring.map((s, i) => (
+                    <TechStackIcon key={i} TechStackIcon={s.icon} Language={s.language} />
+                  ))}
+                </div>
+              </div>
+
             </div>
           </TabPanel>
         </SwipeableViews>
