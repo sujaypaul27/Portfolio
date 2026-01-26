@@ -1,18 +1,21 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-  // ✅ Allow only POST
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { name, email, message } = req.body;
-
-  if (!name || !email || !message) {
-    return res.status(400).json({ message: "Missing fields" });
-  }
-
   try {
+    // ✅ SAFELY PARSE BODY (FIXES VERCEL 500)
+    const body =
+      typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+
+    const { name, email, message } = body || {};
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
