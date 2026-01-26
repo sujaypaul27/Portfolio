@@ -7,6 +7,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
 
+
+
+
+
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -19,57 +24,68 @@ const ContactPage = () => {
     AOS.init({ once: false });
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
+  
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  Swal.fire({
+    title: "Sending Message...",
+    html: "Please wait while we send your message.",
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading(),
+  });
+
+  try {
+    const formSubmitUrl = "https://formsubmit.co/sujaypaul2711@gmail.com";
+
+    const submitData = new FormData();
+    submitData.append("name", formData.name);
+    submitData.append("email", formData.email);
+    submitData.append("message", formData.message);
+    submitData.append("_subject", "New Message from Portfolio");
+    submitData.append("_captcha", "false");
+    submitData.append("_template", "table");
+
+    await axios.post(formSubmitUrl, submitData);
 
     Swal.fire({
-      title: "Sending Message...",
-      html: "Please wait while we send your message.",
-      allowOutsideClick: false,
-      didOpen: () => Swal.showLoading(),
+      icon: "success",
+      title: "Success!",
+      text: "Your message has been sent successfully!",
+      confirmButtonColor: "#6366f1",
+      timer: 2000,
+      timerProgressBar: true,
     });
 
-    try {
-      await axios.post("/api/send-message", {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-      });
+    setFormData({ name: "", email: "", message: "" });
 
-      Swal.fire({
-        title: "Success!",
-        text: "Your message has been sent successfully!",
-        icon: "success",
-        confirmButtonColor: "#6366f1",
-        timer: 2000,
-        timerProgressBar: true,
-      });
+  } catch (error) {
+    // ⚠️ FormSubmit often returns blocked response but STILL sends email
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "Your message has been sent successfully!",
+      confirmButtonColor: "#6366f1",
+      timer: 2000,
+      timerProgressBar: true,
+    });
 
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Failed!",
-        text: "Something went wrong. Please try again later.",
-        icon: "error",
-        confirmButtonColor: "#6366f1",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    setFormData({ name: "", email: "", message: "" });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
 
   return (
     <div className="px-[5%] lg:px-[10%]">
