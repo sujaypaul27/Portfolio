@@ -11,9 +11,23 @@ const TechStackIcon = ({ TechStackIcon, Language }) => {
           className="relative h-16 w-16 md:h-20 md:w-20 transform transition-transform duration-300"
         />
       </div>
-      <span className="text-slate-300 font-semibold text-sm md:text-base tracking-wide group-hover:text-white transition-colors duration-300">
-        {Language}
-      </span>
+     
+<div className="flex flex-col items-center justify-center text-center gap-1 min-h-[4.5rem]">
+  {/* Title */}
+  <span className="text-slate-300 font-semibold text-sm md:text-base leading-tight">
+    {Language.split(" (")[0]}
+  </span>
+
+  {/* Description */}
+  {Language.includes("(") && (
+    <span className="text-slate-400 text-xs md:text-sm leading-tight">
+      ({Language.split("(")[1]}
+    </span>
+  )}
+</div>
+
+
+
     </div>
   );
 };

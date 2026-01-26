@@ -39,7 +39,7 @@ const ContactPage = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/send-message", {
+      await axios.post("/api/send-message", {
         name: formData.name,
         email: formData.email,
         message: formData.message,

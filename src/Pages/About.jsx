@@ -114,36 +114,46 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
     </div>
   </div>
 ));
-
 const AboutPage = () => {
-  const [refreshKey, setRefreshKey] = useState(0);
-  // Memoized calculations
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-  const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-  const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+  const [totalProjects, setTotalProjects] = useState(0);
+  const [totalCertificates, setTotalCertificates] = useState(0);
 
-  const startDate = new Date("2025-06-01");
-  const today = new Date();
+  /* ---------- EXPERIENCE CALCULATION ---------- */
+  const YearExperience = useMemo(() => {
+    const startDate = new Date("2025-06-01"); // CHANGE if needed
+    const today = new Date();
 
-  let years = today.getFullYear() - startDate.getFullYear();
-  let months = today.getMonth() - startDate.getMonth();
+    let years = today.getFullYear() - startDate.getFullYear();
+    let months = today.getMonth() - startDate.getMonth();
 
-  // Adjust if current month is before start month
-  if (months < 0) {
-    years -= 1;
-    months += 12;
-  }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
 
-  // Format nicely (hide 0 years)
-  const experienceText =
-    years > 0 ? `${years}y ${months}m` : `${months}m`;
+    return years > 0 ? `${years}y ${months}m` : `${months}m`;
+  }, []);
 
-  return {
-    totalProjects: storedProjects.length,
-    totalCertificates: storedCertificates.length,
-    YearExperience: experienceText,
-  };
-}, [setRefreshKey]);
+  /* ---------- FETCH COUNTS FROM SUPABASE ---------- */
+  useEffect(() => {
+    const fetchCounts = async () => {
+      const { data: projects } = await supabase
+        .from("projects")
+        .select("id");
+
+      const { data: certificates } = await supabase
+        .from("certificates")
+        .select("id");
+
+      setTotalProjects(projects?.length || 0);
+      setTotalCertificates(certificates?.length || 0);
+    };
+
+    fetchCounts();
+  }, []);
+
+
+
 
 
   // Optimized AOS initialization
