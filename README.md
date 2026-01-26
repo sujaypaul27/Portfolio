@@ -1,4 +1,4 @@
-Personal Developer Portfolio
+Personal Developer Portfolio (UPGRADE : Supports react 18.2.0 Deployment)
 
 ==================================================
 
@@ -113,9 +113,8 @@ Start the development server
 npm run dev
 
 Step 5
-Open the browser
+ctrl+Link to open the link in the browser
 
-http://localhost:5173
 
 ==================================================
 
