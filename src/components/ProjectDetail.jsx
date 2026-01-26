@@ -99,35 +99,63 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-
   useEffect(() => {
-    window.scrollTo(0, 0);
+  if (project) {
+    console.log("IMAGE URL:", project.Img);
+  }
+}, [project]);
+
+
+useEffect(() => {
+  window.scrollTo(0, 0);
+
+  const loadProject = async () => {
+    // 1. Try localStorage first
     const storedProjects = JSON.parse(localStorage.getItem("projects")) || [];
-    const selectedProject = storedProjects.find((p) => String(p.id) === id);
-    
-    if (selectedProject) {
-      const enhancedProject = {
-        ...selectedProject,
+    let selectedProject = storedProjects.find(
+      (p) => String(p.id) === id
+    );
 
-         Features: Array.isArray(selectedProject.Features)
-    ? selectedProject.Features
-    : selectedProject.Features
-    ? selectedProject.Features.split(",")
-    : []
-        ,
+    // 2. If not found → fetch from Supabase
+    if (!selectedProject) {
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("id", id)
+        .single();
 
-        TechStack:
-  typeof selectedProject.TechStack === "string"
-    ? selectedProject.TechStack.split(",").map(t => t.trim())
-    : [],
+      if (error) {
+        console.error(error);
+        return;
+      }
 
-
-        Github: selectedProject.Github || 'https://github.com/sujaypaul27',
-      };
-      setProject(enhancedProject);
-     
+      selectedProject = data;
     }
-  }, [id]);
+
+    // 3. Normalize fields (VERY IMPORTANT)
+    const enhancedProject = {
+      ...selectedProject,
+
+      Features: Array.isArray(selectedProject.Features)
+        ? selectedProject.Features
+        : selectedProject.Features
+        ? selectedProject.Features.split(",").map(f => f.trim())
+        : [],
+
+      TechStack:
+        typeof selectedProject.TechStack === "string"
+          ? selectedProject.TechStack.split(",").map(t => t.trim())
+          : [],
+
+      Github: selectedProject.Github || "https://github.com/sujaypaul27",
+    };
+
+    setProject(enhancedProject);
+  };
+
+  loadProject();
+}, [id]);
+
 
   if (!project) {
     return (
@@ -222,7 +250,7 @@ const ProjectDetails = () => {
                 </h3>
                 {project.TechStack.length > 0 ? (
                   <div className="flex flex-wrap gap-2 md:gap-3">
-                    console.log("PROJECT OBJECT:", project);
+                   
 
                     {project.TechStack.map((tech, index) => (
                       <TechBadge key={index} tech={tech} />

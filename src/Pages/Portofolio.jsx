@@ -1,10 +1,20 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import { useTheme } from "@mui/material/styles";
+
+
 
 import { supabase } from "../supabase.js"; 
 
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import { useTheme } from "@mui/material/styles";
+
+
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -131,6 +141,8 @@ function a11yProps(index) {
 
 
 export default function FullWidthTabs() {
+  const swiperRef = useRef(null);
+
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [projects, setProjects] = useState([]);
@@ -194,9 +206,13 @@ export default function FullWidthTabs() {
     fetchData(); // Tetap panggil fetchData untuk sinkronisasi data terbaru
   }, [fetchData]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+ const handleChange = (event, newValue) => {
+  setValue(newValue);
+  if (swiperRef.current) {
+    swiperRef.current.slideTo(newValue);
+  }
+};
+
 
   const toggleShowMore = useCallback((type) => {
     if (type === 'projects') {
@@ -318,11 +334,22 @@ export default function FullWidthTabs() {
           </Tabs>
         </AppBar>
 
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={setValue}
-        >
+       <Swiper
+  modules={[Pagination]}
+  slidesPerView={1}
+  speed={600}
+  allowTouchMove={true}
+  onSwiper={(swiper) => {
+    swiperRef.current = swiper;
+  }}
+  onSlideChange={(swiper) => {
+    setValue(swiper.activeIndex);
+  }}
+>
+
+
+
+       <SwiperSlide>
           <TabPanel value={value} index={0} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
@@ -352,6 +379,8 @@ export default function FullWidthTabs() {
               </div>
             )}
           </TabPanel>
+          </SwiperSlide>
+          <SwiperSlide>
 
           <TabPanel value={value} index={1} dir={theme.direction}>
             <div className="container mx-auto flex justify-center items-center overflow-hidden">
@@ -379,7 +408,9 @@ export default function FullWidthTabs() {
               </div>
             )}
           </TabPanel>
+          </SwiperSlide>
 
+          <SwiperSlide>
        <TabPanel value={value} index={2}>
             <div className="space-y-12 pb-[5%]">
 
@@ -412,7 +443,9 @@ export default function FullWidthTabs() {
 
             </div>
           </TabPanel>
-        </SwipeableViews>
+          </SwiperSlide>
+          </Swiper>
+       
       </Box>
     </div>
   );
